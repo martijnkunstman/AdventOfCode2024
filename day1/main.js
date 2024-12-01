@@ -1,8 +1,8 @@
 fetch("data.txt")
   .then((response) => response.text())
   .then((textData) => {
-    let array1 = [],
-      array2 = [],
+    let left = [],
+      right = [],
       answer1 = 0,
       answer2 = 0;
     textData
@@ -10,17 +10,17 @@ fetch("data.txt")
       .split("\n")
       .forEach((line) => {
         const [val1, val2] = line.split(/\s+/).map(Number);
-        array1.push(val1);
-        array2.push(val2);
+        left.push(val1);
+        right.push(val2);
       });
-    array2.sort();
-    array1.sort().map((x, index) => {
+      right.sort();
+    left.sort().map((l, i) => {
       let count = 0;
-      array2.map((y) => {
-        x == y ? count++ : null;
+      right.map((r) => {
+        l == r ? count++ : null;
       });
-      answer2 += count * x;
-      answer1 += Math.abs(x - array2[index]);
+      answer1 += Math.abs(l - right[i]);
+      answer2 += count * l;
     });
     console.log(answer1); //2066446
     console.log(answer2); //24931009
