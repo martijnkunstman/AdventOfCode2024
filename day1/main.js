@@ -8,7 +8,7 @@ fetch("data.txt")
     textData
       .trim()
       .split("\n")
-      .forEach((l) => {
+      .map((l) => {
         const [v1, v2] = l.split(/\s+/).map(Number);
         left.push(v1);
         right.push(v2);
