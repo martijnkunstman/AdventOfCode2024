@@ -3,25 +3,23 @@ fetch("data.txt")
   .then((textData) => {
     let left = [],
       right = [],
-      answer1 = 0,
-      answer2 = 0;
+      ans1 = 0,
+      ans2 = 0;
     textData
       .trim()
       .split("\n")
-      .forEach((line) => {
-        const [val1, val2] = line.split(/\s+/).map(Number);
-        left.push(val1);
-        right.push(val2);
+      .forEach((l) => {
+        const [v1, v2] = l.split(/\s+/).map(Number);
+        left.push(v1);
+        right.push(v2);
       });
-      right.sort();
+    right.sort();
     left.sort().map((l, i) => {
-      let count = 0;
-      right.map((r) => {
-        l == r ? count++ : null;
-      });
-      answer1 += Math.abs(l - right[i]);
-      answer2 += count * l;
+      let c = 0;
+      right.map((r) => (l == r ? c++ : null));
+      ans1 += Math.abs(l - right[i]);
+      ans2 += c * l;
     });
-    console.log(answer1); //2066446
-    console.log(answer2); //24931009
+    console.log(ans1); //2066446
+    console.log(ans2); //24931009
   });
