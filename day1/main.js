@@ -6,15 +6,15 @@ fetch("data.txt")
       answer1 = 0,
       answer2 = 0;
     textData
-      .replace(/(\r\n|\n|\r)/gm, "\n")
+      .trim()
       .split("\n")
-      .map((x) => {
-        array1.push(Number(x.split("   ")[0]));
-        array2.push(Number(x.split("   ")[1]));
+      .forEach((line) => {
+        const [val1, val2] = line.split(/\s+/).map(Number);
+        array1.push(val1);
+        array2.push(val2);
       });
-    array1.sort();
     array2.sort();
-    array1.map((x, index) => {
+    array1.sort().map((x, index) => {
       let count = 0;
       array2.map((y) => {
         x == y ? count++ : null;
