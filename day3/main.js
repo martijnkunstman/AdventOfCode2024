@@ -3,9 +3,10 @@ fetch("data.txt")
   .then((textData) => {
     textData.replaceAll("\n", "");
 
+    // part 1
+
     function solveMul(data) {
       let answer = 0;
-      console.log("l1:" + data.length);
       for (let i = 0; i < data.length; i++) {
         data[i] = data[i].split(")")[0];
       }
@@ -27,14 +28,12 @@ fetch("data.txt")
       }
       return answer;
     }
-    
+
     let data = textData.split("mul(");
-    console.log("answer:");
-    console.log(solveMul(data));//187194524
+    console.log("answer:"+solveMul(data));//187194524
     
-    //
     // part 2
-    //
+
     let data2 = textData.split("don't()");
     let temp1 = data2[0];
     for (let i = 1; i < data2.length; i++) {
@@ -45,8 +44,7 @@ fetch("data.txt")
       }
       temp1 = temp1 + temp2;
     }
-    data = temp1.split("mul(");
-    console.log("answer:");
-    console.log(solveMul(data));//127092535
+    data2 = temp1.split("mul(");
+    console.log("answer:" + solveMul(data2));//127092535
 
   });
