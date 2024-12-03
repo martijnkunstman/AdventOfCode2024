@@ -10,20 +10,16 @@ fetch("data.txt")
         data[i] = data[i].split(")")[0];
       }
       for (let i = 0; i < data.length; i++) {
-        if (data[i].split(",").length == 2) {
+        if (data[i].split(",").length === 2) {
           data[i] = data[i].split(",").map(Number);
-        } else {
-          data[i] = "";
-        }
+        } 
       }
       for (let i = 0; i < data.length; i++) {
         if (data[i].length === 2) {
           if (!isNaN(data[i][0]) && !isNaN(data[i][1])) {
             answer = answer + data[i][0] * data[i][1];
           }
-        } else {
-          data[i] = "";
-        }
+        } 
       }
       return answer;
     }
