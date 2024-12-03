@@ -4,7 +4,6 @@ fetch("data.txt")
     textData.replaceAll("\n", "");
 
     // part 1
-
     function solveMul(data) {
       let answer = 0;
       for (let i = 0; i < data.length; i++) {
@@ -28,12 +27,10 @@ fetch("data.txt")
       }
       return answer;
     }
-
     let data = textData.split("mul(");
     console.log("answer:"+solveMul(data));//187194524
     
     // part 2
-
     let data2 = textData.split("don't()");
     let temp1 = data2[0];
     for (let i = 1; i < data2.length; i++) {
@@ -46,5 +43,4 @@ fetch("data.txt")
     }
     data2 = temp1.split("mul(");
     console.log("answer:" + solveMul(data2));//127092535
-
   });

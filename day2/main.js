@@ -2,7 +2,6 @@ let data;
 let answer1 = 0;
 let answer2 = 0;
 let safe = true;
-//fetch("data_simple.txt")
 fetch("data.txt")
   .then((response) => response.text())
   .then((textData) => {
@@ -12,7 +11,6 @@ fetch("data.txt")
       if (checkSafe(data[i])) answer1++;
     }
     console.log(answer1); //379
-
     //bruteforce all possible variations on the array
     for (let a = 0; a < data.length; a++) {
       let oneSave = false;
@@ -38,16 +36,12 @@ function checkSafe(checkThisArray) {
       [...checkThisArray].sort().reverse().toString() ==
         checkThisArray.toString()
     )
-  ) {
-    safe = false;
-  }
+  ) {safe = false;}
   for (let j = 1; j < checkThisArray.length; j++) {
     if (
       Math.abs(checkThisArray[j - 1] - checkThisArray[j]) > 3 ||
       checkThisArray[j - 1] == checkThisArray[j]
-    ) {
-      safe = false;
-    }
+    ) {safe = false;}
   }
   return safe;
 }
