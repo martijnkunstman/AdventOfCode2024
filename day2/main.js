@@ -2,6 +2,8 @@ let data;
 let answer1 = 0;
 let answer2 = 0;
 let safe = true;
+let goBigger = true;
+//fetch("data_simple.txt")
 fetch("data.txt")
   .then((response) => response.text())
   .then((textData) => {
@@ -10,11 +12,11 @@ fetch("data.txt")
       data[i] = data[i].split(" ").map(Number);
       if (checkSafe(data[i])) answer1++;
     }
-    console.log(answer1); //379
+    console.log(answer1); //407
+
     //bruteforce all possible variations on the array
     for (let a = 0; a < data.length; a++) {
       let oneSave = false;
-      //check all variations of the array
       if (checkSafe(data[a])) oneSave = true;
       for (let b = 0; b < data[a].length; b++) {
         let tempArray = [...data[a]];
@@ -25,23 +27,33 @@ fetch("data.txt")
       }
       if (oneSave) answer2++;
     }
-    console.log(answer2); //430
+    console.log(answer2); //459
   });
 
 function checkSafe(checkThisArray) {
   safe = true;
-  if (
-    !(
-      [...checkThisArray].sort().toString() == checkThisArray.toString() ||
-      [...checkThisArray].sort().reverse().toString() ==
-        checkThisArray.toString()
-    )
-  ) {safe = false;}
+
+  goBigger = true;
+  if (checkThisArray[1] > checkThisArray[0]) {
+    goBigger = true;
+  } else {
+    goBigger = false;
+  }
+
+  if (!([...checkThisArray].sort(function(a, b){return a-b}).toString() == [...checkThisArray].toString() ||
+  [...checkThisArray].sort(function(a, b){return a-b}).reverse().toString() == [...checkThisArray].toString() 
+))
+{
+  safe = false;
+}
+
   for (let j = 1; j < checkThisArray.length; j++) {
     if (
       Math.abs(checkThisArray[j - 1] - checkThisArray[j]) > 3 ||
       checkThisArray[j - 1] == checkThisArray[j]
-    ) {safe = false;}
+    ) {
+      safe = false;
+    }
   }
   return safe;
 }
