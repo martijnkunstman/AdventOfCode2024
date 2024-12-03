@@ -2,7 +2,6 @@ let data;
 let answer1 = 0;
 let answer2 = 0;
 let safe = true;
-let goBigger = true;
 //fetch("data_simple.txt")
 fetch("data.txt")
   .then((response) => response.text())
@@ -32,14 +31,6 @@ fetch("data.txt")
 
 function checkSafe(checkThisArray) {
   safe = true;
-
-  goBigger = true;
-  if (checkThisArray[1] > checkThisArray[0]) {
-    goBigger = true;
-  } else {
-    goBigger = false;
-  }
-
   if (!([...checkThisArray].sort(function(a, b){return a-b}).toString() == [...checkThisArray].toString() ||
   [...checkThisArray].sort(function(a, b){return a-b}).reverse().toString() == [...checkThisArray].toString() 
 ))
