@@ -62,14 +62,12 @@ fetch("data.txt")
     //-------------------
     let currentTime = performance.timeOrigin + performance.now();
     useUint8Array();
+    console.log("-useUintArray array-");
     console.log(
       "duration:" + (performance.timeOrigin + performance.now() - currentTime)
     );
-    console.log("-useUintArray array-");
     console.log("answer1: " + answer1 + " should be: 2718"); //2718
     console.log("answer2: " + answer2 + " should be: 2046"); //2046
-
-    //check time when convert to numbers and use Uint8Array
     //-------------------
     answer1 = 0;
     answer2 = 0;
@@ -177,6 +175,91 @@ function useUint8Array() {
     for (let x = 0; x < length; x++) {
       const idx = y * length + x; // 1D index for (x, y)
 
+      if (x < length - 3) {
+        if (dataUint[idx] == 1) {
+          if (dataUint[idx + 1] == 10) {
+            if (dataUint[idx + 2] == 100) {
+              if (dataUint[idx + 3] == 1000) {
+                answer1++;
+              }
+            }
+          }
+        }
+        if (dataUint[idx] == 1000) {
+          if (dataUint[idx + 1] == 100) {
+            if (dataUint[idx + 2] == 10) {
+              if (dataUint[idx + 3] == 1) {
+                answer1++;
+              }
+            }
+          }
+        }
+      }
+
+      if (y < length - 3) {
+        if (dataUint[idx] == 1) {
+          if (dataUint[idx + length] == 10) {
+            if (dataUint[idx + 2 * length] == 100) {
+              if (dataUint[idx + 3 * length] == 1000) {
+                answer1++;
+              }
+            }
+          }
+        }
+        if (dataUint[idx] == 1000) {
+          if (dataUint[idx + length] == 100) {
+            if (dataUint[idx + 2 * length] == 10) {
+              if (dataUint[idx + 3 * length] == 1) {
+                answer1++;
+              }
+            }
+          }
+        }
+      }
+
+      if (x < length - 3 && y < length - 3) {
+        if (dataUint[idx] == 1) {
+          if (dataUint[idx + length + 1] == 10) {
+            if (dataUint[idx + 2 * (length + 1)] == 100) {
+              if (dataUint[idx + 3 * (length + 1)] == 1000) {
+                answer1++;
+              }
+            }
+          }
+        }
+        if (dataUint[idx] == 1000) {
+          if (dataUint[idx + length + 1] == 100) {
+            if (dataUint[idx + 2 * (length + 1)] == 10) {
+              if (dataUint[idx + 3 * (length + 1)] == 1) {
+                answer1++;
+              }
+            }
+          }
+        }
+      }
+
+      if (x > 2 && y < length - 3) {
+        if (dataUint[idx] == 1) {
+          if (dataUint[idx + length - 1] == 10) {
+            if (dataUint[idx + 2 * (length - 1)] == 100) {
+              if (dataUint[idx + 3 * (length - 1)] == 1000) {
+                answer1++;
+              }
+            }
+          }
+        }
+        if (dataUint[idx] == 1000) {
+          if (dataUint[idx + length - 1] == 100) {
+            if (dataUint[idx + 2 * (length - 1)] == 10) {
+              if (dataUint[idx + 3 * (length - 1)] == 1) {
+                answer1++;
+              }
+            }
+          }
+        }
+      }
+
+      /*
       // Horizontal -
       if (x < length - 3) {
         if (
@@ -264,6 +347,7 @@ function useUint8Array() {
           answer1++;
         }
       }
+        */
 
       // 3x3 patterns
       if (x < length - 2 && y < length - 2) {
@@ -306,6 +390,7 @@ function useUint8Array() {
     }
   }
 }
+
 /*
 -- two dimensional array
 
