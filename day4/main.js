@@ -9,31 +9,35 @@ fetch("data.txt")
     for (let i = 0; i < data.length; i++) {
       data[i] = data[i].split("");
     }
-    console.log(data);
 
-    //to do to optimise... convert letters to numbers:
+    //to do to optimise... 
+    
+    //convert letters to numbers and use Uint8Array
 
     /*
 
-    X 1
-    M 2
-    A 3
-    S 4
+    X -> 1
+    M -> 2
+    A -> 3
+    S -> 4
 
     */
 
+    //nest ifs and make them simpler
+    //use continues and breaks
+
     for (y = 0; y < data.length; y++) {
       for (x = 0; x < data[y].length; x++) {
-        //horizontal
+        //horizontal -
         let hor, ver, dia1, dia2;
         if (x < data[y].length - 3) {
           hor = data[x][y] + data[x + 1][y] + data[x + 2][y] + data[x + 3][y];
         }
-        //vertical
+        //vertical |
         if (y < data.length - 3) {
           ver = data[x][y] + data[x][y + 1] + data[x][y + 2] + data[x][y + 3];
         }
-        //diagonal1
+        //diagonal1 \
         if (x < data[y].length - 3 && y < data.length - 3) {
           dia1 =
             data[x][y] +
@@ -41,7 +45,7 @@ fetch("data.txt")
             data[x + 2][y + 2] +
             data[x + 3][y + 3];
         }
-        //diagonal2
+        //diagonal2 /
         if (x > 2 && y < data.length - 3) {
           dia2 =
             data[x][y] +
@@ -50,18 +54,10 @@ fetch("data.txt")
             data[x - 3][y + 3];
         }
 
-        if (hor == "XMAS" || hor == "SAMX") {
-          answer1++;
-        }
-        if (ver == "XMAS" || ver == "SAMX") {
-          answer1++;
-        }
-        if (dia1 == "XMAS" || dia1 == "SAMX") {
-          answer1++;
-        }
-        if (dia2 == "XMAS" || dia2 == "SAMX") {
-          answer1++;
-        }
+        if (hor == "XMAS" || hor == "SAMX") answer1++;
+        if (ver == "XMAS" || ver == "SAMX") answer1++;
+        if (dia1 == "XMAS" || dia1 == "SAMX") answer1++;
+        if (dia2 == "XMAS" || dia2 == "SAMX") answer1++;
       }
     }
 
@@ -70,7 +66,7 @@ fetch("data.txt")
     for (y = 0; y < data.length; y++) {
       for (x = 0; x < data[y].length; x++) {
         if (x < data[y].length - 2 && y < data.length - 2) {
-        
+      
           //M M     M S     S M     S S
           // A       A       A       A
           //S S     M S     S M     M M
