@@ -1,0 +1,43 @@
+/// ------------------------- Day 5 -------------------------
+
+
+const input = read("input.txt")
+const parts = stringSplit(input, "\n\n")
+
+const rules, messages = stringSplit(parts#0, "\n"), stringSplit(parts#1, "\n")
+const page_rules, printed_pages = [], []
+
+do push(page_rules, map(stringSplit(r, "|"), long (v, i) => { return stringToInt(v) })) for r in rules
+do push(printed_pages, map(stringSplit(m, ","), long (v, i) => { return stringToInt(v) })) for m in messages
+
+const lookup = *([[false] * 100] * 100)
+//2d array 100x100 filled with false
+
+set lookup#(pr#0)#(pr#1) = true for pr in page_rules
+//map rules on 2d array...
+
+make amount, amount_2 = 0
+
+//-------------------------
+
+do {
+    ///------------------------- sort function -------------------------
+    /// this is where the real magic happens
+    const sorted = sort(*p, int (a, b) => { 
+        return -1 when lookup#a#b
+        return 1 when lookup#b#a
+        return 0
+    })
+    ///------------------------- 
+
+    if sorted == p then {
+        set amount += p#(((int)p)/2)
+    } else {
+        set amount_2 += sorted#(((int)sorted)/2)
+    }
+} for p in printed_pages
+
+//-------------------------
+
+do sayln(`Part 1: {amount}`)
+do sayln(`Part 2: {amount_2}`)
