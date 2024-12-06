@@ -157,7 +157,7 @@ fetch("data.txt")
               answer1++;
             }
           }
-          break;
+          return;
         }
         if (mapDataToCheck[currentPosition] === 0) {
           currentDirection++;
@@ -170,10 +170,9 @@ fetch("data.txt")
     }
 
     function checkPart28(mapDataToCheck) {
-      for (let i = 0; i < 10000; i++) {
+      for (let i = 0; i < 7000; i++) {
         previousPosition = currentPosition;
         let x = currentPosition % dimension;
-        //if (x ===0  && currentDirection === 3) 
         mapDataToCheck[currentPosition] = 2;
         currentPosition = currentPosition + directions[currentDirection];
         if (currentPosition < 0 || currentPosition > dimension * dimension || (x ===0  && currentDirection === 3) ||  (x ===dimension - 1  && currentDirection === 1)  ) {
@@ -182,7 +181,6 @@ fetch("data.txt")
               return 0;
             }
           }
-          break;
         }
         if (mapDataToCheck[currentPosition] === 0) {
           currentDirection++;
