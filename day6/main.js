@@ -146,7 +146,7 @@ fetch("data.txt")
     //now i got the mapData in a 1 dimensional Uint8Array
 
     function checkPart18(mapDataToCheck) {
-      for (let i = 0; i < 10000; i++) {
+      for (let i = 0; i < 7000; i++) {
         previousPosition = currentPosition;
         let x = currentPosition % dimension;
         mapDataToCheck[currentPosition] = 2;
@@ -157,6 +157,7 @@ fetch("data.txt")
               answer1++;
             }
           }
+          break;
           return;
         }
         if (mapDataToCheck[currentPosition] === 0) {
@@ -169,11 +170,28 @@ fetch("data.txt")
       }
     }
 
+    //0 = #
+    //1 = .
+    //2 = up                              1  
+    //3 = right                           1
+    //4 = down                            1
+    //5 = left                            1
+    //6 = up and right                    2
+    //7 = up and down                     2
+    //8 = up and left                     2
+    //9 = up and right and down           3
+    //10 = up and right and left          3
+    //11 = up and right and down and left 4
+    //12 = up and down and left           3
+    //13 = right and down                 2  
+    //14 = right and left                 2
+    //15 = right and down and left        3
+    //16 = down and left                  2
+
     function checkPart28(mapDataToCheck) {
       for (let i = 0; i < 7000; i++) {
         previousPosition = currentPosition;
         let x = currentPosition % dimension;
-        mapDataToCheck[currentPosition] = 2;
         currentPosition = currentPosition + directions[currentDirection];
         if (currentPosition < 0 || currentPosition > dimension * dimension || (x ===0  && currentDirection === 3) ||  (x ===dimension - 1  && currentDirection === 1)  ) {
           for (let j = 0; j < mapDataToCheck.length; j++) {
@@ -219,9 +237,6 @@ fetch("data.txt")
     duration = performance.timeOrigin + performance.now() - currentTime;
     console.log("duration: " + duration);
     console.log("answer2: " + answer2); //1915
-
-
-
     console.log("end");
   });
 
