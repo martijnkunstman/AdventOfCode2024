@@ -22,6 +22,11 @@ fetch("data.txt")
 
     console.log(mapData);
 
+    //part 1
+
+    console.log("-- NONE optimized version --");
+    let currentTime = performance.timeOrigin + performance.now();
+    
     //got through the complete map and find not dots...
     for (let y = 0; y < mapData.length; y++) {
       for (let x = 0; x < mapData[y].length; x++) {
@@ -32,10 +37,7 @@ fetch("data.txt")
       }
     }
 
-    console.log(mapData2);
-
     //count all the #
-
     for (let i = 0; i < mapData2.length; i++) {
       for (let j = 0; j < mapData2[i].length; j++) {
         if (mapData2[i][j] == 1) {
@@ -43,6 +45,14 @@ fetch("data.txt")
         }
       }
     }
+
+    let duration = performance.timeOrigin + performance.now() - currentTime;
+    console.log("duration part 1: " + duration);
+   
+
+    //part 2
+
+    currentTime = performance.timeOrigin + performance.now();
 
     for (let y = 0; y < mapData.length; y++) {
       for (let x = 0; x < mapData[y].length; x++) {
@@ -53,6 +63,7 @@ fetch("data.txt")
       }
     }
 
+    //count all the #
     for (let i = 0; i < mapData2.length; i++) {
       for (let j = 0; j < mapData2[i].length; j++) {
         if (mapData2[i][j] == 1) {
@@ -60,6 +71,11 @@ fetch("data.txt")
         }
       }
     }
+
+    
+    duration = performance.timeOrigin + performance.now() - currentTime;
+    console.log("duration part 2: " + duration);
+
 
     function findAndMark(charToFind, x1, y1, part) {
       for (let y = 0; y < mapData.length; y++) {
@@ -106,6 +122,6 @@ fetch("data.txt")
       }
     }
 
-    console.log("answer1: " + answer1); //361 OK!
-    console.log("answer2: " + answer2); //
+    console.log("answer1: " + answer1); //361
+    console.log("answer2: " + answer2); //1249 
   });
