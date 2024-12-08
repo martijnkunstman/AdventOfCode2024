@@ -27,7 +27,7 @@ fetch("data.txt")
       for (let x = 0; x < mapData[y].length; x++) {
         if (mapData[y][x] != "." && mapData[y][x] != "#") {
           let charToFind = mapData[y][x];
-          findAndMark(charToFind, x, y);
+          findAndMark(charToFind, x, y, 1);
         }
       }
     }
@@ -35,6 +35,7 @@ fetch("data.txt")
     console.log(mapData2);
 
     //count all the #
+
     for (let i = 0; i < mapData2.length; i++) {
       for (let j = 0; j < mapData2[i].length; j++) {
         if (mapData2[i][j] == 1) {
@@ -43,7 +44,24 @@ fetch("data.txt")
       }
     }
 
-    function findAndMark(charToFind, x1, y1) {
+    for (let y = 0; y < mapData.length; y++) {
+      for (let x = 0; x < mapData[y].length; x++) {
+        if (mapData[y][x] != "." && mapData[y][x] != "#") {
+          let charToFind = mapData[y][x];
+          findAndMark(charToFind, x, y, 2);
+        }
+      }
+    }
+
+    for (let i = 0; i < mapData2.length; i++) {
+      for (let j = 0; j < mapData2[i].length; j++) {
+        if (mapData2[i][j] == 1) {
+          answer2++;
+        }
+      }
+    }
+
+    function findAndMark(charToFind, x1, y1, part) {
       for (let y = 0; y < mapData.length; y++) {
         for (let x = 0; x < mapData[y].length; x++) {
           if (mapData[y][x] == charToFind) {
@@ -54,14 +72,34 @@ fetch("data.txt")
             let differenceY = y1 - y2;
             let newx = x1 + differenceX;
             let newy = y1 + differenceY;
-            if (
-              (differenceX != 0 && differenceY != 0) &&
-              newx >= 0 &&
-              newx < mapData[0].length &&
-              newy >= 0 &&
-              newy < mapData.length
-            ) {
-              mapData2[newy][newx] = 1;
+            if (part == 1) {
+              if (
+                differenceX != 0 &&
+                differenceY != 0 &&
+                newx >= 0 &&
+                newx < mapData[0].length &&
+                newy >= 0 &&
+                newy < mapData.length
+              ) {
+                mapData2[newy][newx] = 1;
+              }
+            } else {
+              for (let i = 0; i < mapData.length; i++) {
+                {
+                newx = x1 + differenceX * i;
+                newy = y1 + differenceY * i;
+                }
+              if (
+                differenceX != 0 &&
+                differenceY != 0 &&
+                newx >= 0 &&
+                newx < mapData[0].length &&
+                newy >= 0 &&
+                newy < mapData.length
+              ) {
+                mapData2[newy][newx] = 1;
+              }
+            }
             }
           }
         }
