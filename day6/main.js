@@ -170,42 +170,123 @@ fetch("data.txt")
       }
     }
 
+    //if you keep track of all the directions that are already checked you can recognize a loop
+
     //0 = #
     //1 = .
-    //2 = up                              1  
-    //3 = right                           1
-    //4 = down                            1
-    //5 = left                            1
-    //6 = up and right                    2
-    //7 = up and down                     2
-    //8 = up and left                     2
-    //9 = up and right and down           3
-    //10 = up and right and left          3
-    //11 = up and right and down and left 4
-    //12 = up and down and left           3
-    //13 = right and down                 2  
-    //14 = right and left                 2
-    //15 = right and down and left        3
-    //16 = down and left                  2
+
+    //3 = up                              2         2^1 -> 2
+    //5 = right                           4         2^2 -> 4
+    //9 = down                            8         2^3 -> 8
+    //17 = left                           16        2^4 -> 16
+
+    //7 = up and right                    6
+    //11 = up and down                    10
+    //19 = up and left                    18
+    //15 = up and right and down          14
+    //23 = up and right and left          22
+    //31 = up and right and down and left 30
+    //27 = up and down and left           26
+    //13 = right and down                 12
+    //21 = right and left                 20
+    //29 = right and down and left        28
+    //25 = down and left                  24
 
     function checkPart28(mapDataToCheck) {
       for (let i = 0; i < 7000; i++) {
         previousPosition = currentPosition;
         let x = currentPosition % dimension;
         currentPosition = currentPosition + directions[currentDirection];
-        if (currentPosition < 0 || currentPosition > dimension * dimension || (x ===0  && currentDirection === 3) ||  (x ===dimension - 1  && currentDirection === 1)  ) {
+
+        if (
+          currentPosition < 0 ||
+          currentPosition > dimension * dimension ||
+          (x === 0 && currentDirection === 3) ||
+          (x === dimension - 1 && currentDirection === 1)
+        ) {
           for (let j = 0; j < mapDataToCheck.length; j++) {
             if (mapDataToCheck[j] === 2) {
               return 0;
             }
           }
         }
+
+        //check if i have a loop....
+        //3 7 11 19 15 23 31 27
         if (mapDataToCheck[currentPosition] === 0) {
           currentDirection++;
           if (currentDirection > 3) {
             currentDirection = 0;
           }
           currentPosition = previousPosition;
+        } else {
+          if (currentDirection === 0) {
+            if (
+              mapDataToCheck[currentPosition] === 3 ||
+              mapDataToCheck[currentPosition] === 7 ||
+              mapDataToCheck[currentPosition] === 11 ||
+              mapDataToCheck[currentPosition] === 19 ||
+              mapDataToCheck[currentPosition] === 15 ||
+              mapDataToCheck[currentPosition] === 23 ||
+              mapDataToCheck[currentPosition] === 31 ||
+              mapDataToCheck[currentPosition] === 27
+            ) {
+              //console.log("found a loop 0 - " + i);
+              //return 1;
+            }
+          } else {
+            if (currentDirection === 1) {
+              //5 7 15 23 31 13 21 29
+              if (
+                mapDataToCheck[currentPosition] === 5 ||
+                mapDataToCheck[currentPosition] === 7 ||
+                mapDataToCheck[currentPosition] === 15 ||
+                mapDataToCheck[currentPosition] === 23 ||
+                mapDataToCheck[currentPosition] === 31 ||
+                mapDataToCheck[currentPosition] === 13 ||
+                mapDataToCheck[currentPosition] === 21 ||
+                mapDataToCheck[currentPosition] === 29
+              ) {
+                //console.log("found a loop 1 - " + i);
+                return 1;
+              }
+            } else {
+              if (currentDirection === 2) {
+                //9 11 15 31 27 13 25 29
+                if (
+                  mapDataToCheck[currentPosition] === 9 ||
+                  mapDataToCheck[currentPosition] === 11 ||
+                  mapDataToCheck[currentPosition] === 15 ||
+                  mapDataToCheck[currentPosition] === 31 ||
+                  mapDataToCheck[currentPosition] === 27 ||
+                  mapDataToCheck[currentPosition] === 13 ||
+                  mapDataToCheck[currentPosition] === 25 ||
+                  mapDataToCheck[currentPosition] === 29
+                ) {
+                  //console.log("found a loop 2 - " + i);
+                  return 1;
+                }
+              } else {
+                if (currentDirection === 3) {
+                  //17 19 23 31 27 21 29 25
+                  if (
+                    mapDataToCheck[currentPosition] === 17 ||
+                    mapDataToCheck[currentPosition] === 19 ||
+                    mapDataToCheck[currentPosition] === 23 ||
+                    mapDataToCheck[currentPosition] === 31 ||
+                    mapDataToCheck[currentPosition] === 27 ||
+                    mapDataToCheck[currentPosition] === 21 ||
+                    mapDataToCheck[currentPosition] === 29 ||
+                    mapDataToCheck[currentPosition] === 25
+                  ) {
+                    //console.log("found a loop 3 - " + i);
+                    return 1;
+                  }
+                }
+              }
+            }
+          }
+          mapDataToCheck[currentPosition] += Math.pow(currentDirection + 1, 2);
         }
       }
       return 1;
@@ -218,20 +299,23 @@ fetch("data.txt")
     console.log("duration: " + duration);
     console.log("answer1: " + answer1); //5199
 
-
     value = 0;
     currentTime = performance.timeOrigin + performance.now();
 
     for (let i = 0; i < mapDataUint8Array.length; i++) {
-        if (mapDataUint8Array[i] === 0 || i === startPosition || mapDataUint8Array[i] === 1) {
-            continue;
-        }
-        let tempMapData = [...mapDataUint8Array];
-        tempMapData[i] = 0;
-        currentPosition = startPosition;
-        currentDirection = 0;
-        value = checkPart28(tempMapData);
-        answer2 = answer2 + value;
+      if (
+        mapDataUint8Array[i] === 0 ||
+        i === startPosition ||
+        mapDataUint8Array[i] === 1
+      ) {
+        continue;
+      }
+      let tempMapData = [...mapDataUint8Array];
+      tempMapData[i] = 0;
+      currentPosition = startPosition;
+      currentDirection = 0;
+      value = checkPart28(tempMapData);
+      answer2 = answer2 + value;
     }
 
     duration = performance.timeOrigin + performance.now() - currentTime;
