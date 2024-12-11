@@ -3,27 +3,32 @@ let answer2 = 0;
 let mapData = [];
 
 //fetch("data.txt")
-fetch("data_simple.txt")
+  fetch("data_simple.txt")
   .then((response) => response.text())
   .then((textData) => {
     mapData = textData.split("\r\n");
     for (let i = 0; i < mapData.length; i++) {
       mapData[i] = mapData[i].split("").map(Number);
     }
-    console.log(mapData);
+    console.log(mapData);S
+
     //
-    //check for all the zeros in the map how many 9s they can reach
+    // check for all the zeros in the map how many 9s they can reach
     //
-    for (let y = 0; y < mapData.length; i++) {
-      for (let x = 0; x < mapData[i].length; j++) {
+
+    for (let y = 0; y < mapData.length; y++) {
+      for (let x = 0; x < mapData[y].length; x++) {
         let count9s = 0;
         if (mapData[y][x] == 0) {
-          count9s = find9s(x, y);
+          count9s = find9s(x, y, 1);
         }
         answer1 += count9s;
       }
     }
-    function find9s(x0, y0) {
+
+    console.log("Answer1: " + answer1);
+
+    function find9s(x0, y0, part) {
       let startPosition = { x: x0, y: y0 }; //this is the position of the 0
       //first find all the 9's that are possible...
       let possible9s = [];
@@ -31,9 +36,9 @@ fetch("data_simple.txt")
         for (let x9 = x0 - 9; x9 <= x0 + 9; x9++) {
           if (
             x9 >= 0 &&
-            x9 < testMap[0].length &&
+            x9 < mapData[0].length &&
             y9 >= 0 &&
-            y9 < testMap.length
+            y9 < mapData.length
           ) {
             if (Math.abs(y9 - y0) + Math.abs(x9 - x0) <= 9) {
               if (mapData[y9][x9] == 9) {
@@ -43,13 +48,85 @@ fetch("data_simple.txt")
           }
         }
       }
+
       //then check for those 9s if there is a path back to the 0
+      //console.log("startPosition:");
+      //console.log(startPosition);
+      //console.log("possible9s:");
+      //console.log(possible9s);
+
+      let pathMap = [];
+
+      for (let y = 0; y < mapData.length; y++) {
+        pathMap.push([]);
+        for (let x = 0; x < mapData[y].length; x++) {
+          pathMap[y].push(0);
+        }
+      }
+
+      //make pathMap
+      for (let height = 0; height < 10; height++) {
+        if (height == 0) {
+          pathMap[startPosition.y][startPosition.x] = height + 1;
+        } else {
+          //find all the heights that are next to 1 positions
+          for (let y = 0; y < pathMap.length; y++) {
+            for (let x = 0; x < pathMap[y].length; x++) {
+              if (pathMap[y][x] == height) {
+                if (y > 0) {
+                  if (mapData[y - 1][x] == height) {
+                    pathMap[y - 1][x] = height + 1;
+                  }
+                }
+                if (y < mapData.length - 1) {
+                  if (mapData[y + 1][x] == height) {
+                    pathMap[y + 1][x] = height + 1;
+                  }
+                }
+
+                if (x > 0) {
+                  if (mapData[y][x - 1] == height) {
+                    pathMap[y][x - 1] = height + 1;
+                  }
+                }
+
+                if (x < mapData[y].length - 1) {
+                  if (mapData[y][x + 1] == height) {
+                    pathMap[y][x + 1] = height + 1;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      //console.log("startPosition:");
+      //console.log(startPosition);
+      console.log("pathMap:");
+      console.log(pathMap);
+      //console.log("mapData:");
+      //console.log(mapData);
+
+      //check if 9s are in pathMap
+      let count9s = 0;
+      if (part == 1) {
+        for (let i = 0; i < possible9s.length; i++) {
+          if (pathMap[possible9s[i].y][possible9s[i].x] != 0) {
+            count9s++;
+          }
+        }
+      }
+      //console.log(count9s);
+      return count9s;
     }
+
   });
 
 //--------------------TESTS---------------------
 
 //test if this checks the right 9s for the 0
+
 let testMap = [];
 for (let y = 0; y < 50; y++) {
   testMap.push([]);
@@ -77,4 +154,27 @@ for (let y = 0; y < testMap.length; y++) {
   testMap[y] = testMap[y].join("");
 }
 
-console.log(testMap);
+//console.log(testMap);
+
+let testMap2 = [
+[0,1,2,3,4,5,6,7,8,9],
+[1,0,3,0,0,0,0,0,0,0],
+[2,0,4,5,0,0,0,0,0,0],
+[3,0,0,6,7,8,9,0,0,0],
+[4,0,0,0,8,0,0,0,0,0],
+[5,0,0,0,9,0,0,0,0,0],
+[6,0,0,0,0,0,0,0,0,0],
+[7,0,0,0,0,0,0,9,0,0],
+[8,0,0,0,0,0,9,0,0,0],
+[9,0,0,0,0,0,0,0,0,0]
+]
+
+
+let pathCount = walk(0,0,0,0);
+
+
+
+function walk(search_x, search_y, h, found)
+{
+   return found;
+}
