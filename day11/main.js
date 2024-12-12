@@ -3,6 +3,7 @@ let answer2 = 0;
 let stones = [];
 let results = [];
 let numbersAndResultsFor4 = [];
+let foundNumbers = [];
 
 fetch("data.txt")
 //fetch("data_simple.txt")
@@ -15,7 +16,6 @@ fetch("data.txt")
 
     for (let i = 0; i < 10; i++) {
       numbersAndResultsFor4.push(calculateCountForNumberAndCycles([i], 4));
-    
     }
     console.log("numbersAndResultsFor4:");
     console.log(numbersAndResultsFor4);
@@ -25,6 +25,8 @@ fetch("data.txt")
     console.log("answer1:");
     answer1 = calculateCountForNumberAndCycles(stones, 25);
     console.log(answer1);//198075
+    console.log("foundNumbers:");
+    console.log(foundNumbers);
 
   });
 
@@ -42,6 +44,10 @@ function calculateCountForNumberAndCycles(numbers, cycles) {
 }
 
 function step(input) {
+  let index = input;
+  if (foundNumbers[index] != undefined) {
+    return foundNumbers[index];
+  }
   if (input == "0") {
     //rule 1
     input = "1";
@@ -64,5 +70,6 @@ function step(input) {
     bigNumber = bigNumber * 2024n;
     input = bigNumber.toString();
   }
+  foundNumbers[index]=input;
   return input;
 }
