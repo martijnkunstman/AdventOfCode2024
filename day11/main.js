@@ -4,8 +4,8 @@ let stones = [];
 let results = [];
 let foundNumbers = [];
 
-fetch("data.txt")
-  //fetch("data_simple.txt")
+//fetch("data.txt")
+fetch("data_simple.txt")
   .then((response) => response.text())
   .then((textData) => {
     console.log(textData);
@@ -17,18 +17,18 @@ fetch("data.txt")
 
     console.log("answer1:");
     answer1 = calculateCountForNumberAndCycles(stones, 25);
-    console.log(answer1); //198075
+    console.log(answer1); //198075    //55312 test
 
     //console.log("foundNumbers:");
     //console.log(foundNumbers);
 
     // ---- test ----
-    stones = ['2701','64945','0','9959979','93','781524','620','1'];
+    stones = textData.split(" ");
     foundNumbers = [];
     console.log("stones:");
     console.log(stones);
 
-    answer2 = calculateCountForNumberAndCyclesSET(stones, 75);
+    answer2 = calculateCountForNumberAndCyclesSET(stones, 25);
     console.log("answer2"); 
     console.log(answer2); //198075
 
@@ -70,7 +70,7 @@ function calculateCountForNumberAndCyclesSET(numbers, cycles) {
     }
     //console.log("duplicates:");
     //console.log(duplicates);
-    numbers = numbers.filter((el) => !duplicates.includes(el));
+    //numbers = numbers.filter((el) => !duplicates.includes(el));
     //console.log("numbers:");
     //console.log(numbers);
 
