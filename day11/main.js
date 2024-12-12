@@ -2,11 +2,10 @@ let answer1 = 0;
 let answer2 = 0;
 let stones = [];
 let results = [];
-let numbersAndResultsFor4 = [];
 let foundNumbers = [];
 
 fetch("data.txt")
-//fetch("data_simple.txt")
+  //fetch("data_simple.txt")
   .then((response) => response.text())
   .then((textData) => {
     console.log(textData);
@@ -14,21 +13,72 @@ fetch("data.txt")
     console.log("stones:");
     console.log(stones);
 
-    for (let i = 0; i < 10; i++) {
-      numbersAndResultsFor4.push(calculateCountForNumberAndCycles([i], 4));
-    }
-    console.log("numbersAndResultsFor4:");
-    console.log(numbersAndResultsFor4);
-
-    //now optimize by replaceing number 1 to 9 by a 0
+   //now optimize by replaceing number 1 to 9 by a 0 ???
 
     console.log("answer1:");
     answer1 = calculateCountForNumberAndCycles(stones, 25);
-    console.log(answer1);//198075
-    console.log("foundNumbers:");
-    console.log(foundNumbers);
+    console.log(answer1); //198075
+
+    //console.log("foundNumbers:");
+    //console.log(foundNumbers);
+
+    // ---- test ----
+    stones = ['2701','64945','0','9959979','93','781524','620','1'];
+    foundNumbers = [];
+    console.log("stones:");
+    console.log(stones);
+
+    answer2 = calculateCountForNumberAndCyclesSET(stones, 75);
+    console.log("answer2"); 
+    console.log(answer2); //198075
+
+    console.log("numbersCount:");
+    console.log(numbersCount);
+
+    console.log("stones:");
+    console.log(stones);
 
   });
+
+//-------------------------------------------------------
+
+
+let numbersCount = [];
+
+function calculateCountForNumberAndCyclesSET(numbers, cycles) {
+  for (let i = 0; i < cycles; i++) {
+    for (let j = 0; j < numbers.length; j++) {
+      numbers[j] = step(numbers[j]);
+    }
+    //console.log("numbers:");
+    //console.log(numbers);
+    numbers = numbers.flat();
+    //find duplicate numbers and count them, then remove them
+    //numbersCount = [];
+    for (let j = 0; j < numbers.length; j++) {
+      if (numbersCount[numbers[j]] == undefined) {
+        numbersCount[numbers[j]] = 1;
+      } else {
+        numbersCount[numbers[j]]++;
+      }
+    }
+    let duplicates = [];
+    for (let j = 0; j < numbers.length; j++) {
+      if (numbersCount[numbers[j]] > 1) {
+        duplicates.push(numbers[j]);
+      }
+    }
+    //console.log("duplicates:");
+    //console.log(duplicates);
+    numbers = numbers.filter((el) => !duplicates.includes(el));
+    //console.log("numbers:");
+    //console.log(numbers);
+
+  }
+  return numbers.length;
+}
+
+
 
 function calculateCountForNumberAndCycles(numbers, cycles) {
   for (let i = 0; i < cycles; i++) {
@@ -38,10 +88,12 @@ function calculateCountForNumberAndCycles(numbers, cycles) {
     numbers = numbers.flat();
     //console.log("cycle " + i);
   }
-  console.log("numbers:");
-  console.log(numbers);
+  //console.log("numbers:");
+  //console.log(numbers);
   return numbers.length;
 }
+
+//-------------------------------------------------------
 
 function step(input) {
   let index = input;
@@ -70,6 +122,6 @@ function step(input) {
     bigNumber = bigNumber * 2024n;
     input = bigNumber.toString();
   }
-  foundNumbers[index]=input;
+  foundNumbers[index] = input;
   return input;
 }
