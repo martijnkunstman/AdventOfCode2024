@@ -16,8 +16,7 @@ let foundNumbers = [];
 currentTime = performance.timeOrigin + performance.now();
 calculateCountForNumberAndCycles(namedArray, 75);
 duration = performance.timeOrigin + performance.now() - currentTime;
-    console.log("duration: " + duration);
-
+console.log("duration: " + duration);
 
 function calculateCountForNumberAndCycles(namedArray, cycles) {
   for (let i = 0; i < cycles; i++) {

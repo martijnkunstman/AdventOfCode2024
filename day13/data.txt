@@ -1,4 +1,4 @@
-day12Button A: X+53, Y+35
+Button A: X+53, Y+35
 Button B: X+11, Y+23
 Prize: X=13386, Y=18840
 
