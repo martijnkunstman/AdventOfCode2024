@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Day 15</title>
+    <style>
+        html{
+            height: 100%;
+        }
+        body{
+            background-color: grey;
+            overflow: hidden;
+            margin: 0;
+            position: relative;
+        }
+        .tile{
+            font-size: 8px;
+            text-align: center;            
+            color: black;
+            position:absolute;
+            width: 20px;
+            height: 20px;
+            box-sizing: border-box;
+            /* border: 1px solid black; */
+            background-color: white;
+        }
+        .robot{
+            background-color: red !important;
+            border-radius: 10px;
+        }
+        .wall{
+            background-color: blue !important;
+        }
+        .box{
+            background-color: green !important;
+        }
+        .boxleft{
+            border-radius: 10px 0 0 10px;
+        }
+        .boxright{
+            border-radius: 0px 10px 10px 0px;
+        }
+        #container{
+            position: fixed;
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            left:0;
+            top:0;
+        }
+    </style>
+    <script defer src="test.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+</body>
+</html>
