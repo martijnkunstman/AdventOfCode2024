@@ -276,14 +276,48 @@ function moveRobot(direction) {
       mapData[robotPosition.y][robotPosition.x] = "@";
       return;
     }
-    // here it starts to be a bit more complicated
-    //.....
+    //
+    //find out if a move is valid checking all the rows under the robot
+    //
+    let foundRobots = [];
+    
+
     if (
       mapData[robotPosition.y + 1][robotPosition.x] == "[" ||
       mapData[robotPosition.y + 1][robotPosition.x] == "]"
     ) {
-      //lets find out of any conecting boxes searching up bumb into a wall
-      //if not find a wall than move all connecting boxes up
+      console.log("Found a box under the robot");
+      //check if it is possible to move the box down checking all the connecting boxes underneath
+     
+      let foundWall = false;
+      let startPointToCheck = robotPosition.y + 1;
+
+
+
+      let foundBox;
+      if (mapData[robotPosition.y + 1][robotPosition.x] == "[") {
+        mapData[robotPosition.y + 2][robotPosition.x] ="[";
+        mapData[robotPosition.y + 2][robotPosition.x + 1] = "]";
+        mapData[robotPosition.y + 1][robotPosition.x] = ".";
+        mapData[robotPosition.y + 1][robotPosition.x + 1] = ".";
+      }
+      if (mapData[robotPosition.y + 1][robotPosition.x] == "]") {
+        mapData[robotPosition.y + 2][robotPosition.x - 1] = "[";
+        mapData[robotPosition.y + 2][robotPosition.x] = "]";
+        mapData[robotPosition.y + 1][robotPosition.x - 1] = ".";
+        mapData[robotPosition.y + 1][robotPosition.x] = ".";
+      }
+      mapData[robotPosition.y][robotPosition.x] = ".";
+      robotPosition.y++;
+      mapData[robotPosition.y][robotPosition.x] = "@";
+
+      return;
     }
   }
+}
+
+
+function moveBoxDown(x,y)
+{
+
 }
