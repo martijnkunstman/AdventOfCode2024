@@ -77,7 +77,21 @@ fetch("data_simple.txt")
 
 document.addEventListener("keydown", (event) => {
   const key = event.key; // "ArrowRight", "ArrowLeft", "ArrowUp", or "ArrowDown"
+  console.log("Key pressed: " + key);
   let direction = "";
+  if (key == "D" || key == "d") {
+    direction = ">";
+  }
+  if (key == "A" || key == "a") {
+    direction = "<";
+  }
+  if (key == "W" || key == "w") {
+    direction = "^";
+  }
+  if (key == "S" || key == "s") {
+    direction = "v";
+  }
+
   if (key == "ArrowRight") {
     direction = ">";
   }
@@ -94,7 +108,6 @@ document.addEventListener("keydown", (event) => {
 
   moveRobot(direction);
   htmlDrawMap();
-
 });
 
 function htmlDrawMap() {
@@ -178,9 +191,9 @@ function moveRobot(direction) {
         if (mapData[robotPosition.y][tempX] == ".") {
           //mapData[robotPosition.y][tempX] = "O";
           //move all the boxes to the right up to the point
-          for (let i = robotPosition.x; i < tempX; i+=2) {
+          for (let i = robotPosition.x; i < tempX; i += 2) {
             mapData[robotPosition.y][i] = "[";
-            mapData[robotPosition.y][i+1] = "]";
+            mapData[robotPosition.y][i + 1] = "]";
           }
           mapData[robotPosition.y][robotPosition.x] = ".";
           robotPosition.x++;
@@ -214,9 +227,9 @@ function moveRobot(direction) {
         if (mapData[robotPosition.y][tempX] == ".") {
           //mapData[robotPosition.y][tempX] = "O";
           //move all the boxes to the right up to the point
-          for (let i = tempX; i < robotPosition.x; i+=2) {
+          for (let i = tempX; i < robotPosition.x; i += 2) {
             mapData[robotPosition.y][i] = "[";
-            mapData[robotPosition.y][i+1] = "]";
+            mapData[robotPosition.y][i + 1] = "]";
           }
           mapData[robotPosition.y][robotPosition.x] = ".";
           robotPosition.x--;
@@ -240,22 +253,14 @@ function moveRobot(direction) {
       mapData[robotPosition.y][robotPosition.x] = "@";
       return;
     }
-    if (mapData[robotPosition.y - 1][robotPosition.x] == "O") {
-      //valid move there is an empty space (.) up to a wall (#)
-      //if an empty space is found move the box (O) there
-      let tempY = robotPosition.y;
-      do {
-        tempY--;
-        if (mapData[tempY][robotPosition.x] == ".") {
-          mapData[tempY][robotPosition.x] = "O";
-          mapData[robotPosition.y][robotPosition.x] = ".";
-          robotPosition.y--;
-          mapData[robotPosition.y][robotPosition.x] = "@";
-          return;
-        }
-      } while (mapData[tempY][robotPosition.x] != "#");
-      //not found an empty space, so no valid move
-      return;
+    // here it starts to be a bit more complicated
+    //.....
+    if (
+      mapData[robotPosition.y - 1][robotPosition.x] == "[" ||
+      mapData[robotPosition.y - 1][robotPosition.x] == "]"
+    ) {
+      //lets find out of any conecting boxes searching up bumb into a wall
+      //if not find a wall than move all connecting boxes up
     }
   } else if (direction == "v") {
     //move down
@@ -271,22 +276,14 @@ function moveRobot(direction) {
       mapData[robotPosition.y][robotPosition.x] = "@";
       return;
     }
-    if (mapData[robotPosition.y + 1][robotPosition.x] == "O") {
-      //valid move there is an empty space (.) up to a wall (#)
-      //if an empty space is found move the box (O) there
-      let tempY = robotPosition.y;
-      do {
-        tempY++;
-        if (mapData[tempY][robotPosition.x] == ".") {
-          mapData[tempY][robotPosition.x] = "O";
-          mapData[robotPosition.y][robotPosition.x] = ".";
-          robotPosition.y++;
-          mapData[robotPosition.y][robotPosition.x] = "@";
-          return;
-        }
-      } while (mapData[tempY][robotPosition.x] != "#");
-      //not found an empty space, so no valid move
-      return;
+    // here it starts to be a bit more complicated
+    //.....
+    if (
+      mapData[robotPosition.y + 1][robotPosition.x] == "[" ||
+      mapData[robotPosition.y + 1][robotPosition.x] == "]"
+    ) {
+      //lets find out of any conecting boxes searching up bumb into a wall
+      //if not find a wall than move all connecting boxes up
     }
   }
 }
