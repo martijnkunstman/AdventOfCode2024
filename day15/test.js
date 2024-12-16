@@ -20,6 +20,235 @@ fetch("data_simple.txt")
         foundRobot = true;
       }
     }
+    mapData = [
+      [
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+      ],
+      [
+        "#",
+        "#",
+        ".",
+        ".",
+        ".",
+        ".",
+        "[",
+        "]",
+        ".",
+        ".",
+        ".",
+        ".",
+        "[",
+        "]",
+        ".",
+        ".",
+        "[",
+        "]",
+        "#",
+        "#",
+      ],
+      [
+        "#",
+        "#",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        "[",
+        "]",
+        ".",
+        ".",
+        "#",
+        "#",
+      ],
+      [
+        "#",
+        "#",
+        ".",
+        ".",
+        "[",
+        "]",
+        "[",
+        "]",
+        ".",
+        ".",
+        ".",
+        ".",
+        "[",
+        "]",
+        ".",
+        ".",
+        "[",
+        "]",
+        "#",
+        "#",
+      ],
+      [
+        "#",
+        "#",
+        ".",
+        ".",
+        ".",
+        ".",
+        "[",
+        "]",
+        "@",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        "[",
+        "]",
+        ".",
+        ".",
+        "#",
+        "#",
+      ],
+      [
+        "#",
+        "#",
+        "[",
+        "]",
+        "#",
+        "#",
+        ".",
+        ".",
+        ".",
+        ".",
+        "[",
+        "]",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        "#",
+        "#",
+      ],
+      [
+        "#",
+        "#",
+        "[",
+        "]",
+        ".",
+        ".",
+        ".",
+        ".",
+        "[",
+        "]",
+        ".",
+        ".",
+        ".",
+        ".",
+        "[",
+        "]",
+        ".",
+        ".",
+        "#",
+        "#",
+      ],
+      [
+        "#",
+        "#",
+        ".",
+        ".",
+        "[",
+        "]",
+        "[",
+        "]",
+        ".",
+        ".",
+        "[",
+        "]",
+        ".",
+        ".",
+        "[",
+        "]",
+        "[",
+        "]",
+        "#",
+        "#",
+      ],
+      [
+        "#",
+        "#",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        "[",
+        "]",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        ".",
+        "#",
+        "#",
+      ],
+      [
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+        "#",
+      ],
+    ];
+    //robotInstructions = "<vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<<<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^>^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^<><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^";
+
+    console.log("robotInstructions: ");
+    console.log(robotInstructions);
+    console.log("Map Data:");
+    console.log(mapData);
+
     //now make the map bigger
 
     //If the tile is #, the new map contains ## instead.
@@ -27,6 +256,7 @@ fetch("data_simple.txt")
     //If the tile is ., the new map contains .. instead.
     //If the tile is @, the new map contains @. instead.
 
+    /*
     for (let i = 0; i < mapData.length; i++) {
       for (let j = 0; j < mapData[i].length; j++) {
         if (mapData[i][j] == "#") {
@@ -43,6 +273,7 @@ fetch("data_simple.txt")
         }
       }
     }
+    */
 
     for (let i = 0; i < mapData.length; i++) {
       for (let j = 0; j < mapData[i].length; j++) {
@@ -259,8 +490,56 @@ function moveRobot(direction) {
       mapData[robotPosition.y - 1][robotPosition.x] == "[" ||
       mapData[robotPosition.y - 1][robotPosition.x] == "]"
     ) {
-      //lets find out of any conecting boxes searching up bumb into a wall
-      //if not find a wall than move all connecting boxes up
+      console.log("Found a box above the robot");
+      //check if it is possible to move the box down checking all the connecting boxes underneath
+
+      let foundWall = false;
+      //there is a box under the robot...
+      //check all lines
+      let boxesFound = [];
+      checkBoxesAbove(robotPosition.x, robotPosition.y);
+
+      function checkBoxesAbove(x, y) {
+        if (mapData[y - 1][x] == "[") {
+          checkIfWallAbove(x, y - 1);
+          checkIfWallAbove(x + 1, y - 1);
+          boxesFound.push({ x: x, y: y - 1, b: "[" });
+          boxesFound.push({ x: x + 1, y: y - 1, b: "]" });
+          checkBoxesAbove(x, y - 1);
+          checkBoxesAbove(x + 1, y - 1);
+        }
+        if (mapData[y - 1][x] == "]") {
+          checkIfWallAbove(x, y - 1);
+          checkIfWallAbove(x - 1, y - 1);
+          boxesFound.push({ x: x, y: y - 1, b: "]" });
+          boxesFound.push({ x: x - 1, y: y - 1, b: "[" });
+          checkBoxesAbove(x, y - 1);
+          checkBoxesAbove(x - 1, y - 1);
+        }
+      }
+      function checkIfWallAbove(x, y) {
+        if (mapData[y - 1][x] == "#") {
+          foundWall = true;
+        }
+      }
+
+      if (!foundWall) {
+        //
+        //move all the boxes up
+        //
+        for (let i = 0; i < boxesFound.length; i++) {
+          mapData[boxesFound[i].y][boxesFound[i].x] = ".";
+        }
+        for (let i = 0; i < boxesFound.length; i++) {
+          mapData[boxesFound[i].y - 1][boxesFound[i].x] = boxesFound[i].b;
+        }
+        //
+        mapData[robotPosition.y][robotPosition.x] = ".";
+        robotPosition.y--;
+        mapData[robotPosition.y][robotPosition.x] = "@";
+      }
+
+      return;
     }
   } else if (direction == "v") {
     //move down
@@ -280,7 +559,6 @@ function moveRobot(direction) {
     //find out if a move is valid checking all the rows under the robot
     //
     let foundRobots = [];
-    
 
     if (
       mapData[robotPosition.y + 1][robotPosition.x] == "[" ||
@@ -288,36 +566,57 @@ function moveRobot(direction) {
     ) {
       console.log("Found a box under the robot");
       //check if it is possible to move the box down checking all the connecting boxes underneath
-     
+
       let foundWall = false;
-      let startPointToCheck = robotPosition.y + 1;
+      //there is a box under the robot...
+      //check all lines
+      let boxesUnderneath = [];
+      checkBoxesUnderneath(robotPosition.x, robotPosition.y);
 
-
-
-      let foundBox;
-      if (mapData[robotPosition.y + 1][robotPosition.x] == "[") {
-        mapData[robotPosition.y + 2][robotPosition.x] ="[";
-        mapData[robotPosition.y + 2][robotPosition.x + 1] = "]";
-        mapData[robotPosition.y + 1][robotPosition.x] = ".";
-        mapData[robotPosition.y + 1][robotPosition.x + 1] = ".";
+      function checkBoxesUnderneath(x, y) {
+        if (mapData[y + 1][x] == "[") {
+          checkIfWallUnderneath(x, y + 1);
+          checkIfWallUnderneath(x + 1, y + 1);
+          boxesUnderneath.push({ x: x, y: y + 1, b: "[" });
+          boxesUnderneath.push({ x: x + 1, y: y + 1, b: "]" });
+          checkBoxesUnderneath(x, y + 1);
+          checkBoxesUnderneath(x + 1, y + 1);
+        }
+        if (mapData[y + 1][x] == "]") {
+          checkIfWallUnderneath(x, y + 1);
+          checkIfWallUnderneath(x - 1, y + 1);
+          boxesUnderneath.push({ x: x, y: y + 1, b: "]" });
+          boxesUnderneath.push({ x: x - 1, y: y + 1, b: "[" });
+          checkBoxesUnderneath(x, y + 1);
+          checkBoxesUnderneath(x - 1, y + 1);
+        }
       }
-      if (mapData[robotPosition.y + 1][robotPosition.x] == "]") {
-        mapData[robotPosition.y + 2][robotPosition.x - 1] = "[";
-        mapData[robotPosition.y + 2][robotPosition.x] = "]";
-        mapData[robotPosition.y + 1][robotPosition.x - 1] = ".";
-        mapData[robotPosition.y + 1][robotPosition.x] = ".";
+      function checkIfWallUnderneath(x, y) {
+        if (mapData[y + 1][x] == "#") {
+          foundWall = true;
+        }
       }
-      mapData[robotPosition.y][robotPosition.x] = ".";
-      robotPosition.y++;
-      mapData[robotPosition.y][robotPosition.x] = "@";
+
+      if (!foundWall) {
+        //
+        //move all the boxes down
+        //
+        for (let i = 0; i < boxesUnderneath.length; i++) {
+          mapData[boxesUnderneath[i].y][boxesUnderneath[i].x] = ".";
+        }
+        for (let i = 0; i < boxesUnderneath.length; i++) {
+          mapData[boxesUnderneath[i].y + 1][boxesUnderneath[i].x] =
+            boxesUnderneath[i].b;
+        }
+        //
+        mapData[robotPosition.y][robotPosition.x] = ".";
+        robotPosition.y++;
+        mapData[robotPosition.y][robotPosition.x] = "@";
+      }
 
       return;
     }
   }
 }
 
-
-function moveBoxDown(x,y)
-{
-
-}
+function moveBoxDown(x, y) {}
