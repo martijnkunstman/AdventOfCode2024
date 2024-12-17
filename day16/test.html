@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cytoscape.js Graph</title>
+  <!-- Include Cytoscape.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.24.0/cytoscape.min.js"></script>
+  <style>
+    /* Style for the Cytoscape container */
+    #cy {
+      width: 100%;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <div id="cy"></div>
+
+  <script>
+    // Define the graph data
+    const graphData = {
+      elements: {
+        nodes: [
+          { data: { id: 'n1-1' } },
+          { data: { id: 'n1-7' } },
+          { data: { id: 'n3-1' } },
+          { data: { id: 'n3-3' } },
+          // Add more nodes here...
+        ],
+        edges: [
+          { data: { source: 'n1-1', target: 'n1-7', weight: 6 } },
+          { data: { source: 'n1-1', target: 'n3-1', weight: 2 } },
+          { data: { source: 'n3-1', target: 'n3-3', weight: 2 } },
+          // Add more edges here...
+        ]
+      }
+    };
+
+    // Initialize Cytoscape.js
+    const cy = cytoscape({
+      container: document.getElementById('cy'), // Container to render the graph
+      elements: graphData.elements,
+      style: [ // Define styles for nodes and edges
+        {
+          selector: 'node',
+          style: {
+            'background-color': '#0074D9',
+            'label': 'data(id)',
+            'color': '#fff',
+            'text-valign': 'center',
+            'text-halign': 'center',
+            'font-size': '12px'
+          }
+        },
+        {
+          selector: 'edge',
+          style: {
+            'width': 2,
+            'line-color': '#FF4136',
+            'target-arrow-color': '#FF4136',
+            'target-arrow-shape': 'triangle',
+            'curve-style': 'bezier',
+            'label': 'data(weight)',
+            'font-size': '10px',
+            'text-background-opacity': 1,
+            'text-background-color': '#fff',
+            'text-background-padding': '2px',
+            'color': '#111'
+          }
+        }
+      ],
+      layout: {
+        name: 'cose', // Layout algorithm (you can try 'grid', 'circle', etc.)
+        padding: 10
+      }
+    });
+  </script>
+</body>
+</html>
