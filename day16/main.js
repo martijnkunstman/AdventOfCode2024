@@ -15,8 +15,8 @@ let rotateDirection = 1;
 let graph = {};
 let cytoscapeData;
 
-//fetch("data.txt")
-fetch("data_simple.txt")
+fetch("data.txt")
+//fetch("data_simple.txt")
 //fetch("data_bigger.txt")
   .then((response) => response.text())
   .then((textData) => {
@@ -94,7 +94,7 @@ fetch("data_simple.txt")
         foundPath.push(temp);
         //console.log(pathToJ[i]);
         answer1 += pathToJ[i]._private.data.weight;
-        answer1 += 1000;
+        //answer1 += 1000;
       }
     }
     //foundPath = [...new Set(foundPath)];  
@@ -130,8 +130,14 @@ fetch("data_simple.txt")
     //101492 to high
     //112436 to high
     //101508 to high
-
     //112436 a star
+
+
+
+    //101484 not right
+    //100048 not right
+
+  
     
 
 
@@ -350,7 +356,7 @@ function makeGraph() {
           if (tempY != y) {
             graph[key].push({
               n: "n" + x + "-" + tempY,
-              d: Math.abs(y - tempY),
+              d: Math.abs(y - tempY)+1000,
             });
           }
           //move down as far as possible
@@ -361,7 +367,7 @@ function makeGraph() {
           if (tempY != y) {
             graph[key].push({
               n: "n" + x + "-" + tempY,
-              d: Math.abs(y - tempY),
+              d: Math.abs(y - tempY)+1000,
             });
           }
           //move left as far as possible
@@ -372,7 +378,7 @@ function makeGraph() {
           if (tempX != x) {
             graph[key].push({
               n: "n" + tempX + "-" + y,
-              d: Math.abs(x - tempX),
+              d: Math.abs(x - tempX)+1000,
             });
           }
           //move right as far as possible
@@ -383,7 +389,7 @@ function makeGraph() {
           if (tempX != x) {
             graph[key].push({
               n: "n" + tempX + "-" + y,
-              d: Math.abs(x - tempX),
+              d: Math.abs(x - tempX)+1000,
             });
           }
         }
