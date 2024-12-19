@@ -14,16 +14,19 @@ let direction = 1;
 let rotateDirection = 1;
 let graph = {};
 let cytoscapeData;
+let foundPath = [];
 
-fetch("data.txt")
-//fetch("data_simple.txt")
-//fetch("data_bigger.txt")
+//fetch("data.txt")
+fetch("data_test.txt")
+//fetch("data_simple.txt")//7036
+//fetch("data_bigger.txt")//11048
   .then((response) => response.text())
   .then((textData) => {
     let temp = textData.split("\r\n");
     for (let i = 0; i < temp.length; i++) {
       mapData.push(temp[i].split(""));
     }
+    //console.log(mapData);
 
     //consoleLogMap();
     findStartPosition();
@@ -73,19 +76,31 @@ fetch("data.txt")
     //cytoscapeData = convertToUndirected(cytoscapeData) 
     
     //console.log(cytoscapeData);
-    //visualizeGraph()
+    visualizeGraph()
 
 
     // Initialize Cytoscape.js
     const cy = cytoscape({elements: cytoscapeData.elements});  
-    var dijkstra = cy.elements().aStar({root:"#"+startNode, goal:"#"+endNode, weight: function(edge){return edge.data('weight');}});    
-    var pathToJ = dijkstra.path.select();
-    //var distToJ = dijkstra.distanceTo( "#"+endNode );
-    //console.log(pathToJ);
+    //var dijkstra = cy.elements().dijkstra({root:"#"+startNode, goal:"#"+endNode, weight: function(edge){return edge.data('weight');}});    
+    
 
+    var dijkstra = cy.elements().dijkstra("#"+startNode, function(edge){
+      return edge.data('weight');
+    });
+    
+    var pathToJ = dijkstra.pathTo( cy.$("#"+endNode) );
+    var distToJ = dijkstra.distanceTo( cy.$("#"+endNode) );
+
+    console.log(pathToJ);
+    console.log(distToJ);
+    ////
+    
+    
+    
+ 
     let answer1 = 0;
    
-    let foundPath = [];
+ 
 
     for (let i = 0; i < pathToJ.length; i++) {
       let temp = pathToJ[i]._private.data.id;
@@ -101,9 +116,17 @@ fetch("data.txt")
     //console.log(foundPath);
 
     console.log("answer1: " + answer1);
+    console.log("foundPath");
+    console.log(foundPath);
 
      
     //mame a path on the map from the foundPath
+    //foundPath.splice(4, 1);
+    //foundPath.splice(70, 1);
+
+    
+
+
     for (let i = 0; i < foundPath.length; i++) {
       let temp = foundPath[i].replaceAll("n","").split("-");
       let x = parseInt(temp[0]);
@@ -130,12 +153,33 @@ fetch("data.txt")
     //101492 to high
     //112436 to high
     //101508 to high
-    //112436 a star
+    //112436 A star
 
 
 
     //101484 not right
     //100048 not right
+    //101488 not right
+    //100480 not right???
+
+    //4 + 2000
+
+    //101484 - 4 - 2000 = 99.480
+
+    //99480 answer....
+
+    //answer1 = 99476;
+
+    //99476 not right.....
+
+    //99476
+
+    //99476
+
+    //98476 not good...
+
+
+    
 
   
     
@@ -249,6 +293,7 @@ function convertToCytoscape(data) {
     }
   }
   //make undirected
+  /*
   for (const source in data) {
     for (const connection of data[source]) {
       const target = connection.n;
@@ -273,6 +318,7 @@ function convertToCytoscape(data) {
       }
     }
   }
+*/
 
   return cytoscapeData;
 }
@@ -292,7 +338,65 @@ function consoleLogMap() {
   temp = temp.replaceAll("0", ".");
   //temp = temp.replaceAll("#", "■");
 
-  console.log(temp);
+  
+  //
+  let mazeHTML = document.getElementById("maze");
+  for (let X = 0; X < mapData[0].length; X++) {
+    for (let Y = 0; Y < mapData.length; Y++) {
+      let div = document.createElement("div");
+      div.id = "x" + X + "y" + Y;
+      div.style.width = "5px";
+      div.style.height = "5px";
+      div.style.display = "inline-block";
+      div.style.backgroundColor = mapData[Y][X] == "#" ? "black" : "white";
+      div.style.position = "absolute";
+      div.style.left = X * 5 + "px";
+      div.style.top = Y * 5 + "px";
+      mazeHTML.appendChild(div);
+    }
+  }
+
+  document.getElementById("x" + startPosition.x + "y" + startPosition.y).style.backgroundColor = "green"; 
+  document.getElementById("x" + endPosition.x + "y" + endPosition.y).style.backgroundColor = "red";
+
+
+  let previousPoint;
+  for (let i = 0; i < foundPath.length; i++) {
+    let temp = foundPath[i].replaceAll("n","").split("-");
+    let x = parseInt(temp[0]);
+    let y = parseInt(temp[1]);
+    if (i>0) {
+      let temp2 = foundPath[i-1].replaceAll("n","").split("-");
+      let x2 = parseInt(temp2[0]);
+      let y2 = parseInt(temp2[1]);
+      if (x2 == x) {
+        for (let j = 1; j < Math.abs(y2-y); j++) {
+          if (y2 < y) {
+            //document.getElementById("x" + x + "y" + (y2+j)).style.backgroundColor = "blue";
+          } else {
+            //document.getElementById("x" + x + "y" + (y2-j)).style.backgroundColor = "blue";
+          }
+        }
+      }
+      if (y2 == y) {
+        for (let j = 1; j < Math.abs(x2-x); j++) {
+          if (x2 < x) {
+            //document.getElementById("x" + (x2+j) + "y" + y).style.backgroundColor = "blue";
+          } else {
+            //document.getElementById("x" + (x2-j) + "y" + y).style.backgroundColor = "blue";
+          }
+        }
+      }
+    }
+
+    document.getElementById("x" + x + "y" + y).style.backgroundColor = "red";
+    document.getElementById("x" + x + "y" + y).innerHTML = i;
+    document.getElementById("x" + x + "y" + y).classList.add("node");
+    console.log(x + " " + y);
+  }
+
+
+
 }
 
 function makeGraph() {
@@ -438,6 +542,7 @@ function removeDeadEnds() {
   } while (deadEnd);
 }
 
+/*
 function checkSolution(startPosition) {
   position = {
     x: startPosition.x,
@@ -478,6 +583,7 @@ function checkSolution(startPosition) {
     }
   }
 }
+*/
 
 function findStartPosition() {
   for (let y = 0; y < mapData.length; y++) {

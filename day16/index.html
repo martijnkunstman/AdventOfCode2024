@@ -9,13 +9,22 @@
     <style>
         /* Style for the Cytoscape container */
         #cy {
-          width: 100%;
+          width: 100vw;
           height: 100vh;
           background-color: #f0f0f0;
+        }
+        #maze{
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+        .node{
+          font-size: 5px;
         }
       </style>
 </head>
 <body>
+    <div id="maze"></div>
     <div id="cy"></div>
 </body>
 </html>
